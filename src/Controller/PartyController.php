@@ -8,10 +8,13 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 class PartyController extends Controller
 {
     /**
+     * Cette méthode affiche la page "Partie"
      * @Route("/party", name="party")
      */
     public function index()
     {
+
+
         return $this->render('party/index.html.twig', [
             'controller_name' => 'PartyController',
         ]);
