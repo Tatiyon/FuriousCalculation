@@ -1,0 +1,10 @@
+// customize some Bootstrap variables
+//$primary: darken(#428bca, 20%);
+
+// the ~ allows you to reference things in node_modules
+@import "~bootstrap/scss/bootstrap";
+
+//Placer le CSS ici (ne pas oublier de lancer la commande de compilation des ressources comme pour le JS)
+//h1 {
+//  color: blue;
+//}
