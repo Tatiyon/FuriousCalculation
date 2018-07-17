@@ -19,9 +19,17 @@
     <script type="text/javascript">
         $(document).ready(function() {
             // http://flipclockjs.com/
-            var clock = new FlipClock($('.your-clock'), {
-
+            var clock = $('.your-clock').FlipClock(10, {
+                clockFace: 'MinuteCounter',
+                countdown: true,
+                autoStart: true
+                // callbacks: {
+                //     start: function() {
+                //         $('.message').html('The clock has started!');
+                //     }
+                // }
             });
+
         });
     </script>
 {% endblock %}
