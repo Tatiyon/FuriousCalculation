@@ -7,13 +7,14 @@
 
 class Calcul
 {
-    var $_libelle;
-    var $_resultat;
+
 }
 
+/**
+ * @return mixed
+ */
 function generateCalcul()
 {
-    echo "Génère un calcul.\n";
     $minTypeCalculRandom    = 1;
     $maxTypeCalculRandom    = 4;
     $minNumberRandom        = 0;
@@ -28,19 +29,20 @@ function generateCalcul()
         $firstNumber    = rand ($minNumberRandom  , $maxNumberRandom );
         $secondNumber   = rand ($minNumberRandom  , $maxNumberRandom );
         $numberTypeCalculRandom = rand ( $minTypeCalculRandom , $maxTypeCalculRandom );
+        $calcul = new Calcul();
         switch ($numberTypeCalculRandom) {
             CASE 1:
-                $_libelle = $firstNumber + " + " + $secondNumber;
-                $_resultat = $firstNumber + $secondNumber;
+                $calcul->setLibelle($firstNumber + " + " + $secondNumber);
+                $calcul->setResultat($firstNumber + $secondNumber);
             CASE 2:
-                $_libelle = $firstNumber + " - " + $secondNumber;
-                $_resultat = $firstNumber - $secondNumber;
+                $calcul->setLibelle($firstNumber + " - " + $secondNumber);
+                $calcul->setResultat($firstNumber - $secondNumber);
             CASE 3 :
-                $_libelle = $firstNumber + " x " + $secondNumber;
-                $_resultat = $firstNumber * $secondNumber;
+                $calcul->setLibelle($firstNumber + " x " + $secondNumber);
+                $calcul->setResultat($firstNumber * $secondNumber);
             CASE 4 :
-                $_libelle = $firstNumber + " / " + $secondNumber;
-                $_resultat = $firstNumber / $secondNumber;
+                $calcul->setLibelle($firstNumber + " / " + $secondNumber);
+                $calcul->setResultat($firstNumber / $secondNumber);
         }
         $incBoucle++;
     }
