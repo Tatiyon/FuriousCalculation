@@ -8,8 +8,20 @@
 </style>
 
 <div class="example-wrapper">
-    <h1>Partie</h1>
+    <h1>Partie 2</h1>
 
+    <div class="your-clock"></div>
 
 </div>
+{% endblock %}
+
+{% block javascripts %}
+    <script type="text/javascript">
+        $(document).ready(function() {
+            // http://flipclockjs.com/
+            var clock = new FlipClock($('.your-clock'), {
+
+            });
+        });
+    </script>
 {% endblock %}
