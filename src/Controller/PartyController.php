@@ -14,7 +14,6 @@ class PartyController extends Controller
     public function index()
     {
 
-        Calcul.generateCalcul();
         return $this->render('party/index.html.twig', [
             'controller_name' => 'PartyController',
         ]);
