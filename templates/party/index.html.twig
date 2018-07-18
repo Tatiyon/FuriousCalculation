@@ -4,12 +4,162 @@
 
 {% block body %}
 <style>
+    .col-sm {
+        border: 1px solid black;
+    }
+
+    li.normalSize {
+        font-size: 15px;
+    }
+
+    li.bigSize {
+        font-size: 35px;
+    }
+
+    h1 {
+        font-size: 60px;
+    }
+
+    .redColor {
+        color: red;
+    }
+
+    .greenColor {
+        color: green;
+    }
+
 
 </style>
 
-<div class="example-wrapper">
-    <h1>Partie</h1>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-sm">
+            <div class="row">
+                <div class="col-sm">
+                    <h1>PARTIE</h1>
 
+                    <ul>
+                        {% for calcul in calculs %}
+                            <li id="{{ calcul.id }}" data-order="{{ loop.index }}"
+                                data-resultat="{{ calcul.resultat }}" class="{% if not loop.first %}d-none normalSize{% else %}bigSize{% endif %}">{{ calcul.libelle }}</li>
+                        {% else %}
+                            <li><em>Aucun calcul trouvé</em></li>
+                        {% endfor %}
+                    </ul>
 
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-sm">
+
+                </div>
+            </div>
+        </div>
+
+        <div class="col-sm">
+            <div class="row">
+                <div class="col-sm">
+                    <form id="formCalcul" class="form-inline">
+                        <div class="form-group mx-sm-3 mb-2">
+                            <label for="inputResultat" class="sr-only">Résultat</label>
+                            <input type="number" class="form-control" id="inputResultat" placeholder="Entrez le résultat">
+                        </div>
+                        <button type="submit" class="btn btn-primary mb-2">Confirmer</button>
+                    </form>
+
+                    <div class="your-clock"></div>
+
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-sm">
+
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
+{% endblock %}
+
+{% block javascripts %}
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $( "#formCalcul" ).submit(function( event ) {
+                event.preventDefault();
+
+                var resultatSaisi = $('#inputResultat').val();
+
+
+                var itemCalculListe = null;
+
+                $( "li" ).each(function() {
+                    if($(this).hasClass("bigSize") && !$(this).hasClass("hide")){
+                        itemCalculListe = $(this);
+                        return false;
+                    }
+                });
+
+                if(itemCalculListe == null){
+                    console.log("ERREUR !!!");
+                    return;
+                }
+
+                var resultatDemande = itemCalculListe.data("resultat");
+
+                resultatSaisi = parseInt(resultatSaisi);
+
+                if(resultatSaisi === resultatDemande){
+                    console.log("OUI");
+                    itemCalculListe.removeClass("redColor");
+                    itemCalculListe.addClass("greenColor");
+
+                    itemCalculListe.removeClass("bigSize");
+                    itemCalculListe.addClass("normalSize");
+
+
+                    var order = itemCalculListe.data("order");
+                    var nextOrder = order + 1;
+
+                    var itemNextCalculListe = $('li[data-order="' + nextOrder + '"]');
+
+                    itemNextCalculListe.addClass("bigSize");
+                    itemNextCalculListe.removeClass("normalSize");
+                    itemNextCalculListe.removeClass("d-none");
+
+                }else{
+                    console.log("NON");
+
+                    itemCalculListe.addClass("redColor");
+                }
+
+                $('#inputResultat').val("");
+            });
+
+        //     // http://flipclockjs.com/
+            var clock = $('.your-clock').FlipClock(60, {
+                clockFace: 'MinuteCounter',
+                countdown: true,
+                autoStart: true,
+                callbacks: {
+                    // start: function() {
+                    //     $('.message').html('The clock has started!');
+                    // }
+                    stop: function() {
+                        var calculsResolved = 0;
+
+                        $( "li" ).each(function() {
+                            if($(this).hasClass("greenColor")){
+                                calculsResolved++;
+                            }
+                        });
+
+                        alert('Temps écoulé ! Vous avez résolu ' + calculsResolved + " calculs.");
+                    }
+                }
+            });
+        //
+        });
+    </script>
 {% endblock %}
