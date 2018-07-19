@@ -56,7 +56,9 @@ class PartyController extends Controller
         for ($i = 1; $i <= $calculationAmount; $i++) {
             $firstNumber    = rand ($minNumberRandom  , $maxNumberRandom );
             $secondNumber   = rand ($minNumberRandom  , $maxNumberRandom );
-
+            $thirdNumber    = rand ($minNumberRandom  , $maxNumberRandom );
+            $fourthNumber   = rand ($minNumberRandom  , $maxNumberRandom );
+            $arrayIndexSymbols = array();
             $symbols = array(
                 "+",
                 "-",
@@ -64,32 +66,26 @@ class PartyController extends Controller
                 "/"
             );
 
-            $indexSymbols = rand ( 0, count($symbols)-1 );
-
-            $calcul = new Calcul();
-
-            switch ($symbols[$indexSymbols]) {
-                case "+":
-                    $resultat = $firstNumber + $secondNumber;
-                    break;
-                case "-":
-                    $resultat = $firstNumber - $secondNumber;
-                    break;
-                case "*" :
-                    $resultat = $firstNumber * $secondNumber;
-                    break;
-                case "/" :
-                    while($firstNumber % $secondNumber != 0){
-                        $firstNumber    = rand ($minNumberRandom  , $maxNumberRandom );
-                        $secondNumber   = rand ($minNumberRandom  , $maxNumberRandom );
-                    }
-
-                    $resultat = $firstNumber / $secondNumber;
-                    break;
+            $nbNumber = rand(2,4);
+            for ($i = 2; $i <= $nbNumber; $i++)
+            {
+                $arrayIndexSymbols[] = rand ( 0, count($symbols)-1 );
             }
-
-            $calcul->setLibelle($correspondenceArray[$firstNumber-1] . " " . $symbols[$indexSymbols] . " " . $correspondenceArray[$secondNumber-1]);
-            $calcul->setResultat($resultat);
+            $calcul = new Calcul();
+            if ($nbNumber = 2 ) {
+                $libelleCalcul  = $correspondenceArray[$firstNumber-1] . " " . $arrayIndexSymbols[1] . " " . $correspondenceArray[$secondNumber-1];
+                $resultatCalcul = $firstNumber . " " . $arrayIndexSymbols[1] . " " . $secondNumber;
+            }
+            if ($nbNumber = 3 ) {
+                $libelleCalcul = $correspondenceArray[$firstNumber-1] . " " . $arrayIndexSymbols[1] . " " . $correspondenceArray[$secondNumber-1] . " " . $arrayIndexSymbols[2] . " " . $correspondenceArray[$thirdNumber-1];
+                $resultatCalcul = $firstNumber . " " . $arrayIndexSymbols[1] . " " . $secondNumber . " " . $arrayIndexSymbols[2] . " " . $thirdNumber;
+            }
+            if ($nbNumber = 4 ) {
+                $libelleCalcul = $correspondenceArray[$firstNumber-1] . " " . $arrayIndexSymbols[1] . " " . $correspondenceArray[$secondNumber-1] . " " . $arrayIndexSymbols[2] . " " . $correspondenceArray[$thirdNumber-1] . $arrayIndexSymbols[3] . " " . $correspondenceArray[$fourthNumber-1];
+                $resultatCalcul = $firstNumber . " " . $arrayIndexSymbols[1] . " " . $secondNumber . " " . $arrayIndexSymbols[2] . " " . $thirdNumber . $arrayIndexSymbols[3] . " " . $fourthNumber;
+            }
+            $calcul->setLibelle($libelleCalcul);
+            $calcul->setResultat(eval($resultatCalcul));
 
             $entityManager->persist($calcul);
         }
