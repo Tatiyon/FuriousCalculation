@@ -46,7 +46,7 @@ class PartyController extends Controller
 
     private function generateCalculs(){
         $entityManager = $this->getDoctrine()->getManager();
-
+        $correspondenceArray    = array ("I","II","III","IV","V","VI","VII","VIII","IX","X");
         $minNumberRandom        = 1;
         $maxNumberRandom        = 10;
 
@@ -88,12 +88,11 @@ class PartyController extends Controller
                     break;
             }
 
-            $calcul->setLibelle($firstNumber . " " . $symbols[$indexSymbols] . " " . $secondNumber);
+            $calcul->setLibelle($correspondenceArray[$firstNumber-1] . " " . $symbols[$indexSymbols] . " " . $correspondenceArray[$secondNumber-1]);
             $calcul->setResultat($resultat);
 
             $entityManager->persist($calcul);
         }
-
         $entityManager->flush();
     }
 }
