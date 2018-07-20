@@ -89,8 +89,7 @@
                     SCORE
                 </div>
                 <div class="card-body">
-                    <h5 class="card-title">Joueur score : </h5>
-                    <p id="score">0</p>
+                    <h5 class="card-title">Joueur score : <a id="score">0</a></h5>
                 </div>
             </div>
 {% endblock %}
@@ -113,7 +112,7 @@
     };
 
         var mySound;
-        mySound = new sound("sound/gametheme.mp3");
+        mySound = new sound("sound/gametime.mp3");
         mySound.play();
         $(document).ready(function() {
             $( "#formCalcul" ).submit(function( event ) {
@@ -172,8 +171,8 @@
 
                     itemCalculListe.addClass("redColor");
                 }
+                $('#inputResultat').val('');
 
-                $('#inputResultat').val("");
             });
 
         //     // http://flipclockjs.com/
@@ -194,6 +193,7 @@
                             }
                         });
                         mySound.stop();
+                        document.getElementById('inputResultat').disabled = true;
                         alert('Temps écoulé ! Vous avez résolu ' + calculsResolved + " calculs.");
 
                     }
